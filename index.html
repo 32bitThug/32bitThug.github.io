@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ayyappa Swamy — Flutter and backend engineer</title>
+<meta name="description" content="Ayyappa Swamy builds offline-first retail software: Flutter POS apps and the Java services behind them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --paper:#F5F4EF; --ink:#16213E; --muted:#5B6478; --line:#D9D7CF; --soft:#ECEAE2;
+  --card:#FFFFFF; --accent:#C9960C; --accent-ink:#5A4300; --receipt:#FFFDF6;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#0F1424; --ink:#ECEBE6; --muted:#A0A6B8; --line:#2A3148; --soft:#161C30;
+    --card:#161C30; --accent:#E8B62D; --accent-ink:#F3D98A; --receipt:#1B2236;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#0F1424; --ink:#ECEBE6; --muted:#A0A6B8; --line:#2A3148; --soft:#161C30;
+  --card:#161C30; --accent:#E8B62D; --accent-ink:#F3D98A; --receipt:#1B2236;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:3px}
+a:hover{color:var(--accent-ink)}
+a:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:2px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+nav{display:flex;justify-content:space-between;align-items:center;gap:22px;flex-wrap:wrap;padding:28px 0 0;font-size:15px}
+nav .me{font-weight:650}
+nav .links{display:flex;gap:20px;color:var(--muted)}
+nav a{text-decoration:none}
+nav a:hover{color:var(--ink)}
+p{max-width:62ch}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.35fr 1fr;gap:48px;align-items:center;padding:88px 0 72px}
+.hero h1{font-size:clamp(34px,5vw,58px);line-height:1.06;font-weight:680;letter-spacing:-.025em;margin:0 0 22px;font-variation-settings:"opsz" 96;max-width:16ch}
+.hero .who{font-size:clamp(17px,2vw,20px);color:var(--muted);margin:0 0 30px;max-width:44ch}
+.hero .who strong{color:var(--ink);font-weight:600}
+.cta{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);padding:12px 20px;border-radius:999px;text-decoration:none;font-weight:600;font-size:16px}
+.cta:hover{color:var(--paper);background:var(--accent-ink)}
+.hero .alt{margin-left:18px;font-size:15px}
+
+/* receipt */
+.receipt{background:var(--receipt);color:var(--ink);font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:13px;line-height:1.6;padding:26px 22px 30px;position:relative;max-width:330px;justify-self:end;width:100%;box-shadow:0 18px 40px -24px rgba(22,33,62,.45);transform:rotate(-1.2deg)}
+.receipt::before,.receipt::after{content:"";position:absolute;left:0;right:0;height:8px;background:radial-gradient(circle at 6px -2px,transparent 6px,var(--receipt) 6.5px) repeat-x;background-size:14px 8px}
+.receipt::before{top:-6px;transform:scaleY(-1)}
+.receipt::after{bottom:-6px}
+.receipt h2{font:inherit;font-weight:600;text-align:center;margin:0 0 4px;letter-spacing:.08em}
+.receipt .sub{text-align:center;color:var(--muted);margin:0 0 14px}
+.receipt .row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--line);padding:5px 0}
+.receipt .row span:last-child{font-weight:600;white-space:nowrap}
+.receipt .total{display:flex;justify-content:space-between;margin-top:12px;font-weight:600}
+.receipt .foot{text-align:center;color:var(--muted);margin-top:14px}
+.receipt .barcode{height:34px;margin:14px auto 0;width:78%;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 9px,var(--ink) 9px 12px,transparent 12px 14px)}
+
+/* sections */
+section{padding:64px 0;border-top:1px solid var(--line)}
+h2.title{font-size:clamp(26px,3.2vw,36px);font-weight:650;letter-spacing:-.02em;margin:0 0 10px}
+.intro{color:var(--muted);margin:0 0 40px;font-size:18px}
+
+/* case studies */
+.case{display:grid;grid-template-columns:1fr 1.6fr;gap:40px;padding:40px 0}
+.case + .case{border-top:1px solid var(--line)}
+.case h3{font-size:clamp(22px,2.6vw,28px);font-weight:650;letter-spacing:-.015em;margin:0 0 10px;line-height:1.15}
+.case .meta{color:var(--muted);font-size:15px;margin:0 0 18px}
+.case .stack{display:flex;flex-wrap:wrap;gap:6px}
+.case .stack span{font-size:13px;background:var(--soft);padding:3px 10px;border-radius:999px}
+.case dl{margin:0}
+.case dt{font-weight:600;margin-top:16px}
+.case dt:first-child{margin-top:0}
+.case dd{margin:4px 0 0;color:var(--ink);max-width:60ch}
+.case .result{margin-top:22px;padding:14px 18px;border-left:3px solid var(--accent);background:var(--soft)}
+.case .result strong{font-weight:650}
+
+/* side projects */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.proj{background:var(--card);border:1px solid var(--line);padding:24px 26px;border-radius:6px}
+.proj h3{margin:0 0 8px;font-size:20px;font-weight:650}
+.proj p{margin:0 0 14px;font-size:16px}
+.proj .go{font-size:15px}
+
+/* about */
+.about{display:grid;grid-template-columns:1.2fr 1fr;gap:48px}
+.about p{margin:0 0 16px}
+.tools h3{font-size:15px;color:var(--muted);font-weight:500;margin:18px 0 4px}
+.tools h3:first-child{margin-top:0}
+.tools p{margin:0;font-weight:550}
+.cp{display:flex;gap:28px;flex-wrap:wrap;margin-top:8px}
+.cp div .big{font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.cp div .lbl{color:var(--muted);font-size:14px}
+
+/* contact */
+.contact p{font-size:clamp(19px,2.4vw,24px);line-height:1.4;max-width:30ch;margin:0 0 24px}
+footer{color:var(--muted);font-size:14px;padding:24px 0 40px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+@media (max-width:780px){
+  .hero{grid-template-columns:1fr;gap:44px;padding:56px 0 48px}
+  .receipt{justify-self:start;transform:none;max-width:100%}
+  .case{grid-template-columns:1fr;gap:18px;padding:32px 0}
+  .about{grid-template-columns:1fr;gap:32px}
+  .hero .alt{display:block;margin:14px 0 0}
+}
+@media (prefers-reduced-motion:no-preference){
+  .receipt{transition:transform .35s ease}
+  .receipt:hover{transform:rotate(0deg)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav aria-label="Sections">
+    <span class="me">Ayyappa Swamy</span>
+    <div class="links"><a href="#work">Work</a><a href="#projects">Projects</a><a href="#about">About</a><a href="#contact">Contact</a></div>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <h1>I build the software a store keeps selling on when the internet goes down.</h1>
+      <p class="who">I’m Ayyappa, a software engineer in Hyderabad. At <strong>IBEE Hosting</strong> I work across the whole retail stack — Flutter point‑of‑sale apps on the counter, and the Java, Quarkus and Spring Boot services behind them.</p>
+      <a class="cta" href="mailto:swamyayyappa101@gmail.com">Get in touch</a>
+      <a class="alt" href="https://github.com/32bitThug">GitHub</a>
+      <a class="alt" href="https://linkedin.com/in/ayyappa-swamy-v">LinkedIn</a>
+    </div>
+
+    <aside class="receipt" aria-label="Summary at a glance">
+      <h2>AYYAPPA S. V.</h2>
+      <p class="sub">Junior Software Engineer<br>IBEE Hosting · since Apr 2025</p>
+      <div class="row"><span>Retail stores on Flutter POS</span><span>50+</span></div>
+      <div class="row"><span>REST &amp; webhook endpoints</span><span>60+</span></div>
+      <div class="row"><span>Third‑party integrations</span><span>6</span></div>
+      <div class="row"><span>Post‑release defects</span><span>−40%</span></div>
+      <div class="row"><span>Coding problems solved</span><span>1000+</span></div>
+      <div class="total"><span>CodeChef (max)</span><span>1641</span></div>
+      <div class="barcode" aria-hidden="true"></div>
+      <p class="foot">Thank you, come again</p>
+    </aside>
+  </header>
+
+  <section id="work">
+    <h2 class="title">Selected work</h2>
+    <p class="intro">Three pieces of the retail platform I’ve shipped at IBEE Hosting, and what each one was for.</p>
+
+    <article class="case">
+      <div>
+        <h3>Moving a retail POS from native Android to Flutter</h3>
+        <p class="meta">IBEE Hosting · 2025</p>
+        <div class="stack"><span>Flutter</span><span>Dart</span><span>Hive</span><span>Spring Boot</span><span>MongoDB</span></div>
+      </div>
+      <div>
+        <dl>
+          <dt>The problem</dt>
+          <dd>The point‑of‑sale app stores ran on was a legacy native Android codebase. Every new store meant more manual setup, and any outage at the counter meant lost sales.</dd>
+          <dt>What I built</dt>
+          <dd>Rebuilt the app in Flutter, with ordering designed offline‑first: Hive holds orders locally and the app keeps taking them when connectivity drops, syncing back to Java and Spring Boot services on MongoDB once it returns.</dd>
+        </dl>
+        <p class="result"><strong>Result:</strong> deployed and scaling across 50+ retail stores, with POS operations continuing through connectivity loss.</p>
+      </div>
+    </article>
+
+    <article class="case">
+      <div>
+        <h3>An integration layer for six third‑party systems</h3>
+        <p class="meta">IBEE Hosting · 2025</p>
+        <div class="stack"><span>Quarkus</span><span>Java</span><span>Redis</span><span>RabbitMQ</span><span>REST</span><span>Webhooks</span></div>
+      </div>
+      <div>
+        <dl>
+          <dt>The problem</dt>
+          <dd>The platform needed to talk to six external services, each with its own APIs and callbacks, without slowing down the store or blocking on slow partners.</dd>
+          <dt>What I built</dt>
+          <dd>60+ Quarkus REST and webhook endpoints, with Redis caching the hot paths and RabbitMQ moving slow or retry‑prone work off the request cycle so a partner outage never stalls a sale.</dd>
+        </dl>
+        <p class="result"><strong>Result:</strong> six integrations live on one consistent, asynchronous backbone.</p>
+      </div>
+    </article>
+
+    <article class="case">
+      <div>
+        <h3>A print service that doesn’t lose receipts</h3>
+        <p class="meta">IBEE Hosting · 2025</p>
+        <div class="stack"><span>WebSockets</span><span>Durable queues</span><span>Cross‑platform</span></div>
+      </div>
+      <div>
+        <dl>
+          <dt>The problem</dt>
+          <dd>Receipt and kitchen printing is the step customers notice when it fails, and printers drop off the network constantly in real stores.</dd>
+          <dt>What I built</dt>
+          <dd>A cross‑platform print service: the POS pushes jobs over WebSockets into durable queues, so a job survives a printer or app restart and prints when the device comes back instead of vanishing.</dd>
+        </dl>
+        <p class="result"><strong>Result:</strong> more reliable printing and clean recovery across store operations.</p>
+      </div>
+    </article>
+  </section>
+
+  <section id="projects">
+    <h2 class="title">Projects on GitHub</h2>
+    <p class="intro">Things I’ve built on my own time.</p>
+    <div class="grid">
+      <article class="proj">
+        <h3>Money Management API</h3>
+        <p>An expense tracker that reads your bank SMS messages and logs transactions automatically. Spring Boot and MySQL backend with JWT auth, REST APIs for transactions and spending charts, and a Flutter client.</p>
+        <a class="go" href="https://github.com/32bitThug/MoneyManagementApi">View the code</a>
+      </article>
+      <article class="proj">
+        <h3>Tech Notes</h3>
+        <p>A notes app for keeping track of what I’m learning, built as a separate JavaScript backend and frontend.</p>
+        <a class="go" href="https://github.com/32bitThug/tech_notes_backend">Backend</a> &nbsp;·&nbsp; <a class="go" href="https://github.com/32bitThug/tech_notes_frontend">Frontend</a>
+      </article>
+      <article class="proj">
+        <h3>Flutter mobile browser</h3>
+        <p>During my internship at Pragament I built session management, domain whitelisting and kiosk‑mode features for a Chrome‑style browser in Flutter, backed by GraphQL and MongoDB, and closed 200+ integration and state issues along the way.</p>
+        <a class="go" href="https://github.com/32bitThug/flutter_news_browser">View the code</a>
+      </article>
+    </div>
+  </section>
+
+  <section id="about" class="about-section">
+    <h2 class="title">About</h2>
+    <div class="about">
+      <div>
+        <p>I graduated in Computer Science and IT from CVR College of Engineering in 2024, interned at Pragament Tech Solutions, and joined IBEE Hosting in April 2025. Most of my work since has been retail software — systems that have to keep working in a shop with a flaky connection, an old printer and a queue of customers.</p>
+        <p>Before any of that I spent a lot of time on competitive programming, and it still shapes how I work: I like problems with a clear correct answer, and I’d rather measure a fix than guess at it.</p>
+        <div class="cp">
+          <div><div class="big">1641</div><div class="lbl">CodeChef rating, peak</div></div>
+          <div><div class="big">#52</div><div class="lbl">worldwide, CodeChef Dec 2022 Long</div></div>
+          <div><div class="big">1000+</div><div class="lbl">problems solved</div></div>
+        </div>
+      </div>
+      <div class="tools">
+        <h3>What I use every day</h3>
+        <p>Java, Dart, Flutter, Spring Boot, Quarkus</p>
+        <h3>Data and messaging</h3>
+        <p>MongoDB, MySQL, Redis, RabbitMQ</p>
+        <h3>Also comfortable with</h3>
+        <p>C++, SQL, GraphQL, Docker, AWS basics, Git, Maven, Postman</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <h2 class="title">Contact</h2>
+    <p>Looking for a backend or Flutter engineer who’s shipped to real stores? Let’s talk.</p>
+    <a class="cta" href="mailto:swamyayyappa101@gmail.com">Email me</a>
+    <a class="alt" href="tel:+916281215473">+91 62812 15473</a>
+  </section>
+
+  <footer><span>Ayyappa Swamy Vasamsetti · Hyderabad, India</span><span><a href="https://github.com/32bitThug">GitHub</a> · <a href="https://linkedin.com/in/ayyappa-swamy-v">LinkedIn</a></span></footer>
+</div>
+</body>
+</html>
